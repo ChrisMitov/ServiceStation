@@ -1,5 +1,7 @@
 package com.christian.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.christian.model.Employee;
@@ -14,11 +16,11 @@ public class EmployeeService {
     this.repository = repository;
   }
 
-  public Employee getEmployeePerId( Long id ) {
-    return repository.getOne( id );
+  public Optional<Employee> getEmployeePerId( Long id ) {
+    return repository.findById( id );
   }
 
   public Employee addNewEmployee(Employee employee){
-    return repository.save( employee );
+    return repository.saveAndFlush( employee );
   }
 }
