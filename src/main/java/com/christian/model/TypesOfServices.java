@@ -18,6 +18,6 @@ public class TypesOfServices {
   private Long   id;
   @Column
   private String name;
-  @OneToMany
-  private List<Employee> employees;
+//  @OneToMany
+//  private List<Employee> employees;
 }
