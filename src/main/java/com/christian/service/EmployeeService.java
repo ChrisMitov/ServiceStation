@@ -2,6 +2,11 @@ package com.christian.service;
 
 import java.util.Optional;
 
+import com.christian.dto.EmployeeDto;
+import com.christian.model.ServiceStation;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.christian.model.Employee;
@@ -10,17 +15,25 @@ import com.christian.repository.EmployeeRepository;
 @Service
 public class EmployeeService {
 
-  private EmployeeRepository repository;
+    private ObjectMapper objectMapper;
+    private EmployeeRepository employeeRepository;
+    private ServiceStationService serviceStationService;
 
-  public EmployeeService( EmployeeRepository repository ) {
-    this.repository = repository;
-  }
+    @Autowired
+    public EmployeeService(@Qualifier("customJson") ObjectMapper objectMapper, EmployeeRepository employeeRepository, ServiceStationService serviceStationService) {
+        this.objectMapper = objectMapper;
+        this.employeeRepository = employeeRepository;
+        this.serviceStationService = serviceStationService;
+    }
 
-  public Optional<Employee> getEmployeePerId( Long id ) {
-    return repository.findById( id );
-  }
+    public Optional<Employee> getEmployeePerId(Long id) {
+        return employeeRepository.findById(id);
+    }
 
-  public Employee addNewEmployee(Employee employee){
-    return repository.saveAndFlush( employee );
-  }
+    public EmployeeDto addNewEmployee(EmployeeDto employeeDto) {
+        Employee employee = objectMapper.convertValue(employeeDto, Employee.class);
+        Optional<ServiceStation> serviceStationById = serviceStationService.getServiceStationById(employeeDto.getServiceStationId());
+        serviceStationById.ifPresent(employee::setServiceStation);
+        return objectMapper.convertValue(employeeRepository.saveAndFlush(employee), EmployeeDto.class);
+    }
 }
