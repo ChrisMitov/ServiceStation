@@ -1,15 +1,19 @@
 package com.christian.controller;
 
+import com.christian.dto.CarDto;
 import com.christian.dto.ServiceStationDto;
+import com.christian.model.Car;
 import com.christian.model.ServiceStation;
 import com.christian.service.ServiceStationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 
@@ -27,9 +31,15 @@ public class ServiceStationController {
 
 
     @PostMapping("/service")
-    public HttpEntity<ServiceStationDto> addServiceStation(@Valid @RequestBody ServiceStationDto serviceStationDto) {
+    public Mono<ServiceStationDto> addServiceStation(@Valid @RequestBody ServiceStationDto serviceStationDto) {
         ServiceStation serviceStation = objectMapper.convertValue(serviceStationDto, ServiceStation.class);
         ServiceStation serviceStation1 = stationService.saveServiceStation(serviceStation);
-        return new HttpEntity<>(objectMapper.convertValue(serviceStation1, ServiceStationDto.class));
+        return Mono.just(objectMapper.convertValue(serviceStation1, ServiceStationDto.class));
+    }
+
+    @PostMapping("/repair/{id}")
+    public void repairCarInServiceStation(@PathVariable Long id, @RequestBody CarDto carDto){
+        Car car = objectMapper.convertValue(carDto, Car.class);
+        stationService.repairCar(id, car);
     }
 }

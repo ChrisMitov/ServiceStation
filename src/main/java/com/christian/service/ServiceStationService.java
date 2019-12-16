@@ -1,5 +1,7 @@
 package com.christian.service;
 
+import com.christian.model.Car;
+import com.christian.model.CarRepairing;
 import com.christian.model.ServiceStation;
 import com.christian.repository.ServiceStationRepository;
 import org.springframework.stereotype.Service;
@@ -21,5 +23,15 @@ public class ServiceStationService {
 
     public ServiceStation saveServiceStation(ServiceStation serviceStation){
         return repository.save(serviceStation);
+    }
+
+    public void repairCar(Long id, Car car) {
+        Optional<ServiceStation> optionalServiceStation = repository.findById(id);
+        if(optionalServiceStation.isPresent()){
+            ServiceStation serviceStation = optionalServiceStation.get();
+            CarRepairing carRepairing = new CarRepairing();
+            carRepairing.setCar(car);
+
+        }
     }
 }
