@@ -1,4 +1,9 @@
 package com.christian.dto;
 
-public class CarDto {
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class CarDto extends BaseDto{
 }

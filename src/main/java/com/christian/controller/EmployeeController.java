@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.christian.model.Employee;
@@ -17,6 +18,7 @@ import reactor.core.publisher.Mono;
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping("/employee")
 public class EmployeeController {
     private EmployeeService employeeService;
 
@@ -24,12 +26,12 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/employee/{id}")
+    @GetMapping("/{id}")
     public Mono<Employee> getEmployee(@PathVariable Long id) throws Exception {
         return Mono.just(employeeService.getEmployeePerId(id).orElseThrow(() -> new Exception("Invalid number")));
     }
 
-    @PostMapping("/employee")
+    @PostMapping
     public Mono<EmployeeDto> addEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
         return Mono.just(employeeService.addNewEmployee(employeeDto));
     }
