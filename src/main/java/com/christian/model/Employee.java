@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Employee extends Person {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "service_station_id")
     private ServiceStation serviceStation;
 

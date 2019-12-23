@@ -32,7 +32,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public Mono<EmployeeDto> addEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
+    public Mono<EmployeeDto> addEmployee(@Valid @RequestBody EmployeeDto employeeDto) throws Exception {
         return Mono.just(employeeService.addNewEmployee(employeeDto));
     }
 }

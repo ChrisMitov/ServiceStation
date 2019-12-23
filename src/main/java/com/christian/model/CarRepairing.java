@@ -22,9 +22,10 @@ public class CarRepairing extends AuditModel {
     @GeneratedValue
     private Long id;
     private CarRepairingType repairingType;
-    private Car car;
-    private ServiceStation serviceStation;
-    private Employee employee;
+
+//    private Car car;
+//    private ServiceStation serviceStation;
+//    private Employee employee;
     private LocalDateTime startingTime;
     private BigDecimal price;
 

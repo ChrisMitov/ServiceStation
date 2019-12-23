@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 @Data
 public class EmployeeDto extends BaseDto {
     private String name;
+    private String username;
+    private String password;
     private Long serviceStationId;
     private ServiceStationDto serviceStation;
 }
