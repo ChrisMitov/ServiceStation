@@ -3,6 +3,7 @@ package com.christian.controller;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,15 +42,15 @@ public class UserController {
     return customJson.convertValue( userService.createUser( user ), UserDto.class );
   }
 
-  @PostMapping( "/addCar/{id}" )
-  public void addCarToUser( @RequestBody CarDto carDto, @PathVariable( "id" ) String userId ) throws Exception {
+  @PostMapping( "/addCar/{username}" )
+  public void addCarToUser( @RequestBody CarDto carDto, @PathVariable( "username" ) String username ) throws Exception {
     final Car car = customJson.convertValue( carDto, Car.class );
-    userService.addCarToUser( car, userId );
+    userService.addCarToUser( car, username );
   }
 
-  @PostMapping( "/showCars/{id}" )
-  public Set<Car> getMyCars( @PathVariable String id ) throws Exception {
-    final User user = userService.getUserById( Long.parseLong( id ) );
+  @PostMapping( "/showCars/{username}" )
+  public Set<Car> getMyCars( @PathVariable String username ) throws Exception {
+    final User user = userService.getUserByUsername( username );
     return user.getCars();
   }
 

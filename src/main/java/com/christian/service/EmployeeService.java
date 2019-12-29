@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.christian.dto.EmployeeDto;
 import com.christian.model.ServiceStation;
+import com.christian.model.enums.Roles;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class EmployeeService {
     Employee employee = objectMapper.convertValue( employeeDto, Employee.class );
     final ServiceStation serviceStationById = serviceStationService.getServiceStationById( employeeDto.getServiceStationId() );
     employee.setServiceStation( serviceStationById );
+    employee.setRole( Roles.Employee );
     return objectMapper.convertValue( employeeRepository.saveAndFlush( employee ), EmployeeDto.class );
   }
 }

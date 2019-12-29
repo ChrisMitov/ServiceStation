@@ -3,8 +3,9 @@ package com.christian.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode( callSuper = true )
 @Data
 public class ServiceStationDto extends BaseDto {
-    public String name;
+  public  String name;
+  private String address;
 }

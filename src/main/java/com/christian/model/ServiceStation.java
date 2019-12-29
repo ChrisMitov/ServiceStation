@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,9 +15,12 @@ import lombok.experimental.Accessors;
 public class ServiceStation {
   @Id
   @GeneratedValue
-  private Long   id;
+  private Long           id;
   @Column
-  private String name;
-//  @OneToMany(fetch = FetchType.LAZY, mappedBy = "serviceStation")
-//  private List<Employee> employees;
+  private String         name;
+  @Column
+  private String         address;
+  @JsonIgnore
+  @OneToMany( mappedBy = "serviceStation" )
+  private List<Employee> employees;
 }

@@ -1,15 +1,13 @@
 package com.christian.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.christian.model.enums.CarRepairingType;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,14 +15,13 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table
 @Data
-@EqualsAndHashCode(callSuper = false)
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
+@EqualsAndHashCode( callSuper = true, exclude = { "serviceStation" } )
 public class Employee extends Person {
 
-    @ManyToOne()
-    @JoinColumn(name = "service_station_id")
-    private ServiceStation serviceStation;
+  @ManyToOne
+  @JoinColumn( name = "service_station_id" )
+  private ServiceStation serviceStation;
 
-    //  @OneToMany
-    //  private List<TypesOfServices> typesOfServices;
+  @Enumerated( EnumType.STRING )
+  private CarRepairingType typesOfService;
 }

@@ -62,4 +62,5 @@ public class ServiceStationController {
     final ServiceStation serviceStationById = stationService.getServiceStationById( Long.parseLong( id ) );
     return objectMapper.convertValue( serviceStationById, ServiceStationDto.class );
   }
+
 }
