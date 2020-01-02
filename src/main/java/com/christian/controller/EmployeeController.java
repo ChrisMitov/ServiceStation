@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.christian.dto.CarRepairingDto;
@@ -40,6 +41,11 @@ public class EmployeeController {
   @GetMapping( "/cars/{employeeId}" )
   public List<CarRepairingDto> getEmployeeCars( @PathVariable Long employeeId ) {
     return employeeService.getEmployeeCars( employeeId );
+  }
+
+  @GetMapping("/statistic")
+  public void getStatistic(@RequestParam("type") String type, @RequestParam("brand") String brand, @RequestParam("year") Integer year ){
+    employeeService.getStatistic(type, brand, year);
   }
 
 }

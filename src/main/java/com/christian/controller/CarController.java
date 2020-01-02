@@ -1,5 +1,6 @@
 package com.christian.controller;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.christian.dto.CarRepairingDto;
+import com.christian.model.enums.Brand;
 import com.christian.model.enums.CarRepairingType;
 import com.christian.service.CarService;
 
@@ -34,6 +36,11 @@ public class CarController {
   @GetMapping( "/repairingType" )
   public Set<CarRepairingType> getRepairingTypes() {
     return carService.getRepairingTypes();
+  }
+
+  @GetMapping( "/brands" )
+  public Set<Brand> getBrands() {
+    return carService.getBrands();
   }
 
   @GetMapping( "/statistic/{carId}" )

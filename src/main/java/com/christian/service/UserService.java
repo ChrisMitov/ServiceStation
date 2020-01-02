@@ -25,7 +25,7 @@ public class UserService {
     return optionalUser.orElseThrow( () -> new Exception( "" ) );
   }
 
-  public void addCarToUser( Car car, String username ) throws Exception {
+  public void addCarToUser( Car car, String username ) {
     final User user = getUserByUsername( username );
     car.setUser( user );
     carRepository.save( car );

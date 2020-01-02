@@ -15,6 +15,7 @@ import com.christian.model.Car;
 import com.christian.model.CarRepairing;
 import com.christian.model.Employee;
 import com.christian.model.ServiceStation;
+import com.christian.model.enums.Brand;
 import com.christian.model.enums.CarRepairingType;
 import com.christian.repository.CarRepairingRepository;
 import com.christian.repository.CarRepository;
@@ -73,4 +74,7 @@ public class CarService {
         );
   }
 
+  public Set<Brand> getBrands() {
+    return EnumSet.allOf( Brand.class );
+  }
 }

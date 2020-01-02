@@ -44,13 +44,13 @@ public class UserController {
   }
 
   @PostMapping( "/addCar/{username}" )
-  public void addCarToUser( @RequestBody CarDto carDto, @PathVariable( "username" ) String username ) throws Exception {
+  public void addCarToUser( @RequestBody CarDto carDto, @PathVariable( "username" ) String username ) {
     final Car car = customJson.convertValue( carDto, Car.class );
     userService.addCarToUser( car, username );
   }
 
   @PostMapping( "/showCars/{username}" )
-  public Set<Car> getMyCars( @PathVariable String username ) throws Exception {
+  public Set<Car> getMyCars( @PathVariable String username ) {
     final User user = userService.getUserByUsername( username );
     return user.getCars();
   }

@@ -9,11 +9,9 @@ import org.springframework.stereotype.Service;
 import com.christian.dto.CarRepairingDto;
 import com.christian.dto.EmployeeDto;
 import com.christian.exception.CustomException;
-import com.christian.model.CarRepairing;
 import com.christian.model.Employee;
 import com.christian.model.ServiceStation;
 import com.christian.model.enums.Roles;
-import com.christian.repository.CarRepairingRepository;
 import com.christian.repository.EmployeeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,10 +21,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class EmployeeService {
   @Qualifier( "customJson" )
-  private ObjectMapper           objectMapper;
-  private EmployeeRepository     employeeRepository;
-  private ServiceStationService  serviceStationService;
-  private CarRepairingRepository carRepairingRepository;
+  private ObjectMapper          objectMapper;
+  private EmployeeRepository    employeeRepository;
+  private ServiceStationService serviceStationService;
+  private CarService            carService;
 
   public Employee getEmployeePerId( Long id ) {
     return employeeRepository.findById( id ).orElseThrow( () -> new CustomException( "Invalid id", "Invalid id for given employee" ) );
@@ -42,9 +40,10 @@ public class EmployeeService {
 
   public List<CarRepairingDto> getEmployeeCars( Long employeeId ) {
     final Employee employee = getEmployeePerId( employeeId );
-    final List<CarRepairing> carRepairings = carRepairingRepository.findAllByServiceStationId( employee.getServiceStation().getId() );
-    return carRepairings.stream()
-        .map( car -> objectMapper.convertValue( car, CarRepairingDto.class ) )
-        .collect( Collectors.toList() );
+    return carService.getCarStatisticByServiceId( employee.getServiceStation().getId() );
+  }
+
+  public void getStatistic( String type, String brand, Integer year ) {
+
   }
 }

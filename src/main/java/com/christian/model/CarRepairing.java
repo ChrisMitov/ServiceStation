@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table
@@ -26,13 +26,13 @@ public class CarRepairing extends AuditModel {
   @GeneratedValue
   private Long             id;
   @Enumerated( EnumType.STRING )
-  private CarRepairingType repairingType;
+  private CarRepairingType carRepairingType;
   @ManyToOne
   @JoinColumn( name = "car_id" )
   private Car              car;
   @ManyToOne
   @JoinColumn( name = "service_station_id" )
   private ServiceStation   serviceStation;
-  private LocalDateTime    startingTime;
+  private LocalDate        startingTime;
   private BigDecimal       price;
 }
