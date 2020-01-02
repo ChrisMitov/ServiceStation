@@ -23,5 +23,5 @@ public class Employee extends Person {
   private ServiceStation serviceStation;
 
   @Enumerated( EnumType.STRING )
-  private CarRepairingType typesOfService;
+  private CarRepairingType carRepairingType;
 }

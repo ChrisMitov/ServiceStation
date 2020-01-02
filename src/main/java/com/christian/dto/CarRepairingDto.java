@@ -1,20 +1,17 @@
 package com.christian.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-import com.christian.model.TypesOfServices;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode( callSuper = true )
 @Data
 public class CarRepairingDto extends BaseDto {
-  private Long carId;
-  private TypesOfServices typesOfServices;
-  private Long serviceStationId;
-  private Long employeeId;
-  private Double amount;
-  private LocalDateTime dateTime;
-
+  private Long          carId;
+  private String        carRepairingType;
+  private Long          serviceStationId;
+  private BigDecimal    price;
+  private LocalDateTime startingTime;
 }

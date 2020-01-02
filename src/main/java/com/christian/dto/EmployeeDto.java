@@ -11,4 +11,5 @@ public class EmployeeDto extends BaseDto {
     private String password;
     private Long serviceStationId;
     private ServiceStationDto serviceStation;
+    private String carRepairingType;
 }

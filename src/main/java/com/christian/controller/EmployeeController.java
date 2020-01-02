@@ -1,9 +1,9 @@
 package com.christian.controller;
 
-import com.christian.dto.EmployeeDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,28 +11,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.christian.dto.CarRepairingDto;
+import com.christian.dto.EmployeeDto;
 import com.christian.model.Employee;
 import com.christian.service.EmployeeService;
+
 import reactor.core.publisher.Mono;
 
-import javax.validation.Valid;
-
 @RestController
-@RequestMapping("/employee")
+@RequestMapping( "/employee" )
 public class EmployeeController {
-    private EmployeeService employeeService;
+  private EmployeeService employeeService;
 
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
+  public EmployeeController( EmployeeService employeeService ) {
+    this.employeeService = employeeService;
+  }
 
-    @GetMapping("/{id}")
-    public Mono<Employee> getEmployee(@PathVariable Long id) throws Exception {
-        return Mono.just(employeeService.getEmployeePerId(id).orElseThrow(() -> new Exception("Invalid number")));
-    }
+  @GetMapping( "/{id}" )
+  public Employee getEmployee( @PathVariable Long id ) {
+    return employeeService.getEmployeePerId( id );
+  }
 
-    @PostMapping
-    public Mono<EmployeeDto> addEmployee(@Valid @RequestBody EmployeeDto employeeDto) throws Exception {
-        return Mono.just(employeeService.addNewEmployee(employeeDto));
-    }
+  @PostMapping
+  public Mono<EmployeeDto> addEmployee( @Valid @RequestBody EmployeeDto employeeDto ) {
+    return Mono.just( employeeService.addNewEmployee( employeeDto ) );
+  }
+
+  @GetMapping( "/cars/{employeeId}" )
+  public List<CarRepairingDto> getEmployeeCars( @PathVariable Long employeeId ) {
+    return employeeService.getEmployeeCars( employeeId );
+  }
+
 }

@@ -27,8 +27,9 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class UserController {
 
-  private                            UserService  userService;
-  @Qualifier( "customJson" ) private ObjectMapper customJson;
+  private UserService  userService;
+  @Qualifier( "customJson" )
+  private ObjectMapper customJson;
 
   @GetMapping( "/{id}" )
   public UserDto getUserById( @PathVariable String id ) throws Exception {
@@ -52,11 +53,6 @@ public class UserController {
   public Set<Car> getMyCars( @PathVariable String username ) throws Exception {
     final User user = userService.getUserByUsername( username );
     return user.getCars();
-  }
-
-  @PostMapping( "/repairCar" )
-  public void repairCar( @RequestBody CarRepairingDto carRepairingDto ) {
-
   }
 
 }

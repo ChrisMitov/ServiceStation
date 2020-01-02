@@ -3,16 +3,14 @@ package com.christian.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.christian.dto.CarDto;
 import com.christian.dto.ServiceStationDto;
-import com.christian.model.Car;
+import com.christian.model.Employee;
 import com.christian.model.ServiceStation;
 import com.christian.service.ServiceStationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,12 +41,6 @@ public class ServiceStationController {
     return Mono.just( objectMapper.convertValue( serviceStation1, ServiceStationDto.class ) );
   }
 
-  @PostMapping( "/repair/{id}" )
-  public void repairCarInServiceStation( @PathVariable Long id, @RequestBody CarDto carDto ) {
-    Car car = objectMapper.convertValue( carDto, Car.class );
-    stationService.repairCar( id, car );
-  }
-
   @GetMapping
   public List<ServiceStationDto> getAllServiceStation() {
     final List<ServiceStation> allServiceStation = stationService.getAllServiceStation();
@@ -58,9 +50,14 @@ public class ServiceStationController {
   }
 
   @GetMapping( "/{id}" )
-  public ServiceStationDto getServiceStation( @PathVariable String id ) throws Exception {
+  public ServiceStationDto getServiceStation( @PathVariable String id ) {
     final ServiceStation serviceStationById = stationService.getServiceStationById( Long.parseLong( id ) );
     return objectMapper.convertValue( serviceStationById, ServiceStationDto.class );
   }
 
+  @GetMapping( "/employees/{serviceStationId}" )
+  public List<Employee> getAllEmployees( @PathVariable String serviceStationId ) {
+    final ServiceStation serviceStationById = stationService.getServiceStationById( Long.parseLong( serviceStationId ) );
+    return serviceStationById.getEmployees();
+  }
 }
