@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +46,11 @@ public class EmployeeController {
 
   @GetMapping( "/statistic" )
   public List<CarStatistics> getStatistic( @RequestParam String type ) {
-    return employeeService.getStatisticByBrand( type);
+    return employeeService.getStatisticByBrand( type );
   }
 
+  @DeleteMapping( "/{id}" )
+  public void deleteEmployee( @PathVariable Long id ) {
+    employeeService.deleteEmployee( id );
+  }
 }
