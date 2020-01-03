@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.christian.dto.CarRepairingDto;
 import com.christian.dto.EmployeeDto;
-import com.christian.model.Employee;
+import com.christian.model.CarStatistics;
 import com.christian.service.EmployeeService;
 
 import reactor.core.publisher.Mono;
@@ -29,7 +29,7 @@ public class EmployeeController {
   }
 
   @GetMapping( "/{id}" )
-  public Employee getEmployee( @PathVariable Long id ) {
+  public EmployeeDto getEmployee( @PathVariable Long id ) {
     return employeeService.getEmployeePerId( id );
   }
 
@@ -38,14 +38,14 @@ public class EmployeeController {
     return Mono.just( employeeService.addNewEmployee( employeeDto ) );
   }
 
-  @GetMapping( "/cars/{employeeId}" )
-  public List<CarRepairingDto> getEmployeeCars( @PathVariable Long employeeId ) {
-    return employeeService.getEmployeeCars( employeeId );
+  @GetMapping( "/cars" )
+  public List<CarRepairingDto> getEmployeeCars() {
+    return employeeService.getEmployeeCars();
   }
 
-  @GetMapping("/statistic")
-  public void getStatistic(@RequestParam("type") String type, @RequestParam("brand") String brand, @RequestParam("year") Integer year ){
-    employeeService.getStatistic(type, brand, year);
+  @GetMapping( "/statistic" )
+  public List<CarStatistics> getStatistic( @RequestParam String type ) {
+    return employeeService.getStatisticByBrand( type);
   }
 
 }

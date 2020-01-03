@@ -14,4 +14,5 @@ public class CarRepairingDto extends BaseDto {
   private Long       serviceStationId;
   private BigDecimal price;
   private LocalDate  startingTime;
+  private CarDto     car;
 }

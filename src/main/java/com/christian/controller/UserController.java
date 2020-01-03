@@ -3,6 +3,7 @@ package com.christian.controller;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,15 +44,15 @@ public class UserController {
     return customJson.convertValue( userService.createUser( user ), UserDto.class );
   }
 
-  @PostMapping( "/addCar/{username}" )
-  public void addCarToUser( @RequestBody CarDto carDto, @PathVariable( "username" ) String username ) {
+  @PostMapping( "/addCar" )
+  public void addCarToUser( @RequestBody CarDto carDto ) {
     final Car car = customJson.convertValue( carDto, Car.class );
-    userService.addCarToUser( car, username );
+    userService.addCarToUser( car );
   }
 
-  @PostMapping( "/showCars/{username}" )
-  public Set<Car> getMyCars( @PathVariable String username ) {
-    final User user = userService.getUserByUsername( username );
+  @GetMapping( "/showCars" )
+  public Set<Car> getMyCars() {
+    final User user = userService.getUserByUsername( SecurityContextHolder.getContext().getAuthentication().getName() );
     return user.getCars();
   }
 

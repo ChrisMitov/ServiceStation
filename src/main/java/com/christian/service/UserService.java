@@ -2,9 +2,11 @@ package com.christian.service;
 
 import java.util.Optional;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.christian.exception.CustomException;
 import com.christian.model.Car;
 import com.christian.model.User;
 import com.christian.model.enums.Roles;
@@ -25,14 +27,17 @@ public class UserService {
     return optionalUser.orElseThrow( () -> new Exception( "" ) );
   }
 
-  public void addCarToUser( Car car, String username ) {
-    final User user = getUserByUsername( username );
+  public void addCarToUser( Car car ) {
+    final User user = getUserByUsername( SecurityContextHolder.getContext().getAuthentication().getName() );
     car.setUser( user );
     carRepository.save( car );
-    //    userRepository.save( user );
   }
 
   public User createUser( User user ) {
+    final User userByUsername = getUserByUsername( user.getUsername() );
+    if( userByUsername != null ) {
+      throw new CustomException( "Username already exists!", "User with this username already exists!" );
+    }
     String encodedPassword = new BCryptPasswordEncoder().encode( user.getPassword() );
     user.setPassword( encodedPassword );
     user.setRole( Roles.User );

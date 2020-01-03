@@ -13,8 +13,8 @@ import com.christian.dto.CarRepairingDto;
 import com.christian.exception.CustomException;
 import com.christian.model.Car;
 import com.christian.model.CarRepairing;
-import com.christian.model.Employee;
 import com.christian.model.ServiceStation;
+import com.christian.model.User;
 import com.christian.model.enums.Brand;
 import com.christian.model.enums.CarRepairingType;
 import com.christian.repository.CarRepairingRepository;
@@ -66,7 +66,7 @@ public class CarService {
 
   private void validateRepairingType( CarRepairingDto carRepairingDto, ServiceStation serviceStationById ) {
     serviceStationById.getEmployees().stream()
-        .map( Employee::getCarRepairingType )
+        .map( User::getCarRepairingType )
         .filter( carRepairingType -> carRepairingDto.getCarRepairingType().equals( carRepairingType.name() ) )
         .findAny()
         .orElseThrow( () ->

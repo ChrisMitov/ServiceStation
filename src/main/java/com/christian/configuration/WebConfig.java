@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
-import org.h2.server.web.WebServlet;
+//import org.h2.server.web.WebServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,10 +23,10 @@ public class WebConfig {
         .build();
   }
 
-  @Bean
-  ServletRegistrationBean h2servletRegistration() {
-    ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet() );
-    registrationBean.addUrlMappings( "/console/*" );
-    return registrationBean;
-  }
+//  @Bean
+//  ServletRegistrationBean h2servletRegistration() {
+//    ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet() );
+//    registrationBean.addUrlMappings( "/console/*" );
+//    return registrationBean;
+//  }
 }
