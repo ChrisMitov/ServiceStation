@@ -36,8 +36,10 @@ public class CarService {
   public void repairCar( CarRepairingDto carRepairingDto ) {
     CarRepairing carRepairing = customJson.convertValue( carRepairingDto, CarRepairing.class );
     final ServiceStation serviceStationById = serviceStationService.getServiceStationById( carRepairingDto.getServiceStationId() );
+    final Car car = getCarById( carRepairingDto.getCarId() );
     validateRepairingType( carRepairingDto, serviceStationById );
-    carRepairing.setCar( getCarById( carRepairingDto.getCarId() ) );
+    validateCarBrand( car, serviceStationById );
+    carRepairing.setCar( car );
     carRepairing.setServiceStation( serviceStationById );
     carRepairingRepository.save( carRepairing );
   }
@@ -74,7 +76,17 @@ public class CarService {
         );
   }
 
+  private void validateCarBrand( Car car, ServiceStation serviceStationById ) {
+    if( serviceStationById.getBrand() != null && !serviceStationById.getBrand().equals( car.getBrand() ) ) {
+      throw new CustomException( "Service station doesn't support car brand!", "Service station doesn't support car brand!" );
+    }
+  }
+
   public Set<Brand> getBrands() {
     return EnumSet.allOf( Brand.class );
+  }
+
+  public void deleteCar( Long id ) {
+    this.carRepository.deleteById( id );
   }
 }
